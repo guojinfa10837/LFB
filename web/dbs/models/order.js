@@ -9,7 +9,7 @@ let orderSchema =  new mongoose.Schema({
     p_user_id:String , //商人
     c_user_id:String,  //农户
     p_order_id:String,//如果在农户的情况下需要有商户的关联 商户为空或者0
-    product_type:Number, //商品种类
+    product_type:String, //商品种类
     product_type_id:Number, //商品种类
     weight:Number,  //重量
     amount_money:Number,//金额，

@@ -41,6 +41,7 @@ const addOrder = function (opt){
 
 router.post('/addOrder', async function(ctx,next){
    const body = ctx.request.body;
+   console.log(body);
    const state = await checkOrder(body,ctx);
    if(!state){
      return;
@@ -49,7 +50,7 @@ router.post('/addOrder', async function(ctx,next){
    const date = utils.sdFormat();
    const order = addOrder({
      orderId:date.time,//订单id
-     role:body.role,//1商户2农户
+     role:body.role || 1,//1商户2农户
      name:body.name, //当前角色的名称
      p_user_id:body.p_user_id , //商人id
      c_user_id:body.c_user_id,  //农户id
@@ -57,7 +58,7 @@ router.post('/addOrder', async function(ctx,next){
      user_id:body.user_id,  //当前角色的id
      product_type:body.product_type, //商品种类
      product_type_id:body.product_type_id,
-     weight:body.weight ,  //重量
+     weight:body.weight,  //重量
      amount_money:body.amount_money,//金额，
      time:date.time,
      time_day:date.day,//时间
@@ -69,10 +70,12 @@ router.post('/addOrder', async function(ctx,next){
    });
    try{
     await order.save();
+    console.log('baoc');
+    ctx.body = utils.statusSuccess;
    }catch(e){
     ctx.body = Object.assign({},utils.statusErrror,{msg:''})
    }
-   ctx.body = utils.statusSuccess;
+  
 });
 
 
